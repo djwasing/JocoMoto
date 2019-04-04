@@ -19,8 +19,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(express.static(process.cwd() + "/public"));
-// app.use(express.static("/public"));
-
 
 // if deployed, use the deployed database. Otherwise, use the local mongoHeadlines database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";

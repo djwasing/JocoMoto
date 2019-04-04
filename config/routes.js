@@ -22,7 +22,7 @@ module.exports = function(app) {
         });
     });
 
-    // -------- scrape --------
+    // -------- scrape ------
     app.get("/scrape", function(req, res) {
         axios.get("http://www.bikeexif.com/").then(function(response) {
         var $ = cheerio.load(response.data);
@@ -49,7 +49,7 @@ module.exports = function(app) {
                 Article.find({link: element.link}, function(err, data) {
                     if (data.length == 0) {
                         //if data.length = 0 the link does not exist because we didn't return anything
-                        Article.insert(element)
+                        Article.create(element)
                             .then(inserted => {
                                 console.log(inserted, index);
                                 if (index === results.length -1){
@@ -81,7 +81,7 @@ module.exports = function(app) {
           }
         });
       })
-  
+
   // -------- Routes for Note Taking --------
 
   app.post("/submit", function(req, res) {

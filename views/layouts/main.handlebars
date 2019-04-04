@@ -5,7 +5,7 @@
     <title>JOCO MOTO</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Paytone+One" rel="stylesheet">
-    <link href="/public/assets/css/style.css"  rel="stylesheet">
+    <link href="/assets/css/style.css"  rel="stylesheet">
 
 
   </head>
@@ -15,10 +15,9 @@
 					<div class="navbar-header">
 						<a class="navbar-brand" id="brand" href="/">JOCO MOTO</a>
 					</div>
-						<ul class="nav navbar-nav">
-							<li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
-							<li><a id="saved" href="/saved">Saved Articles</a></li>
-						</ul>
+						<form class="navbar-form navbar-left" action="/scrape" method="get">
+							<button class="btn btn-danger saved">View Saved Articles</button>
+						</form>
 						<form class="navbar-form navbar-left" action="/scrape" method="get">
 							<button class="btn btn-danger scrape">Scrape New Articles</button>
 						</form>
@@ -33,6 +32,6 @@
 
     {{{body}}}
 
-    <script type="text/javascript" src="/public/assets/js/app.js"></script>
+    <script type="text/javascript" src="/assets/js/app.js"></script>
   </body>
 </html>
