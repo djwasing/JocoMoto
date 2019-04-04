@@ -9,7 +9,15 @@ var ArticleSchema = new Schema({
         type: String,
         required: true,
         unique: true
-    }
+    },
+    saved: {
+        type: Boolean,
+        default: false
+    },
+    note: [{
+        type: Schema.Types.ObjectId,
+        ref: "Note"
+    }]
 });
 
 module.exports = mongoose.model("Article", ArticleSchema);

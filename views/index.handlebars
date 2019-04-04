@@ -1,0 +1,58 @@
+<header class="header">
+  <h1>JOCO MOTO</h1>
+  <nav class="button-group">
+    <button class="button" id="scrape" data-toggle="modal" data-target="#alertModal">Scrape New Moto Articles</button>
+    <a href="/articles/viewSaved"><button class="button" id="viewSaved">View Saved Articles</button></a>
+  </nav>
+</header>
+<div class="filler"></div>
+
+{{#each articles}}
+  {{#unless saved}}
+    <figure class="storyPanel clearfix">
+      <a href="{{storyUrl}}" class="pull-right" target="_blank">
+        <div class="imgBox">
+          <img src="{{imgUrl}}" alt="" class="storyImg" height="150">
+        </div>
+      </a>
+      {{#if storyUrl}}
+        <a href="{{storyUrl}}" class="storyLink" target="_blank">
+          <h2>{{headline}}</h2>
+        </a>
+      {{else}}
+        <h3>{{headline}}</h3>
+      {{/if}}
+      <h5>{{byLine}}</h5>
+      <h6>{{summary}}</h6>
+      <button class="button" id="saveArticle" data-id="{{_id}}">Save Article</button>
+    </figure>
+  {{/unless}}
+{{/each}}
+
+{{!-- Modal for alerting number of scraped articles --}}
+<div id="alertModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h2>You have scraped <span id="numArticles"></span> new articles</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- error modal --}}
+<div id="error" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h2>There was an error processing your request.  Please try again later.</h2>
+      </div>
+    </div>
+  </div>
+</div>
