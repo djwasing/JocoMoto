@@ -1,27 +1,23 @@
 
 <div class="filler"></div>
 
-{{#each articles}}
-  {{#unless saved}}
-    <figure class="storyPanel clearfix">
-      <a href="{{storyUrl}}" class="pull-right" target="_blank">
-        <div class="imgBox">
-          <img src="{{imgUrl}}" alt="" class="storyImg" height="150">
-        </div>
-      </a>
-      {{#if storyUrl}}
-        <a href="{{storyUrl}}" class="storyLink" target="_blank">
-          <h2>{{headline}}</h2>
-        </a>
-      {{else}}
-        <h3>{{headline}}</h3>
-      {{/if}}
-      <h5>{{byLine}}</h5>
-      <h6>{{summary}}</h6>
-      <button class="button" id="saveArticle" data-id="{{_id}}">Save Article</button>
-    </figure>
-  {{/unless}}
-{{/each}}
+<div class="articles container">
+
+    {{#each articles}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{title}}</h3>
+      </div>
+      <div class="panel-body">
+        <a class="artLink" href={{link}}>{{link}}</a>
+        <button data-id={{_id}} class="btn btn-danger pull-right save-article">Save Article</button>
+      </div>
+    </div>
+    <br />
+    <br />
+    {{/each}}
+
+</div>
 
 {{!-- Modal for alerting number of scraped articles --}}
 <div id="alertModal" class="modal fade" role="dialog">

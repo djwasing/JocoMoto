@@ -6,16 +6,18 @@ var axios = require("axios")
 
 module.exports = function(app) {
     app.get("/", function(req, res) {
-        Article.find({saved: false}, function(error, found) {
+        Article.find({saved: false}, function(error, data) {
+            console.log(data);
             if (error) {
                 console.log(error);
-            } else if (found.length === 0) {
+            } else if (data.length === 0) {
                 res.render("empty")
             } else {
   
               var hbsObject = {
-                  articles: found
+                  articles: data
               };
+              
               res.render("index", hbsObject);
   
             }
@@ -44,7 +46,7 @@ module.exports = function(app) {
 
         // checking each link for duplicates, and only adding new links to the db. 
             results.forEach((element, index) => {
-                console.log("line 34", element);
+                //console.log("line 34", element);
             
                 Article.find({link: element.link}, function(err, data) {
                     if (data.length == 0) {
@@ -54,7 +56,7 @@ module.exports = function(app) {
                                 console.log(inserted, index);
                                 if (index === results.length -1){
                                     res.json({message: "scrape complete"});
-                                    console.log("line 43 "+index);
+                                    //console.log("line 43 "+index);
                                 }
                             }).catch(err => {
                                 console.log(err);
