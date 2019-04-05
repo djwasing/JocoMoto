@@ -3,11 +3,12 @@ var cheerio = require("cheerio");
 var Article = require("../models/Article");
 var Note = require("../models/Note");
 var axios = require("axios")
+var articlesController = require("../controllers/articles");
 
 module.exports = function(app) {
     app.get("/", function(req, res) {
         Article.find({saved: false}, function(error, data) {
-            console.log(data);
+            //console.log(data);
             if (error) {
                 console.log(error);
             } else if (data.length === 0) {
@@ -34,11 +35,13 @@ module.exports = function(app) {
         
           var title = $(element).children("h2").children("a").text();
           var link = $(element).find("a").attr("href");
+          var summary = $(element).children("p").text();
         
           if (title && link) {
             results.push({
                 title: title,
-                link: link
+                link: link,
+                summary: summary
               });
           }
           // Save these results in an object that we'll push into the results [] we defined earlier
@@ -53,7 +56,7 @@ module.exports = function(app) {
                         //if data.length = 0 the link does not exist because we didn't return anything
                         Article.create(element)
                             .then(inserted => {
-                                console.log(inserted, index);
+                                //console.log(inserted, index);
                                 if (index === results.length -1){
                                     res.json({message: "scrape complete"});
                                     //console.log("line 43 "+index);
@@ -63,7 +66,7 @@ module.exports = function(app) {
                             })
                     }else{
                         if (index === results.length - 1){
-                            res.json({message: "There were no new articles to scrape"});
+                            res.json({message: "No new articles right now."});
                         }
                     }
                 })
@@ -71,18 +74,6 @@ module.exports = function(app) {
        })
     })
 
-        // --------- show all ----------
-
-    app.get("/all", function(req, res) {
-        Article.find({}, function(err, data) {
-          if (err) {
-            console.log(err);
-          }else{
-            console.log(data);
-            res.json(data);
-          }
-        });
-      })
 
   // -------- Routes for Note Taking --------
 
@@ -101,4 +92,47 @@ module.exports = function(app) {
     //make sure submit butn grabs the ID of the article. send the content of the note AND the ID of the article it belongs to. 
     // create var
   });
+
+
+//  -------- Saving articles ----------
+
+  app.patch("/api/articles", function(req, res) {
+
+    articlesController.update(req.body, function(err, data) {
+        //this gets sent back to app.js and the article is either saved or unsaved
+        res.json(data);
+    });
+});
+
+// ----------- go to saved page ---------
+
+app.get("/saved", function(req, res) {
+
+    articlesController.get({saved: true}, function(data) {
+        var hbsObject = {
+          articles: data
+        };
+        res.render("saved", hbsObject);
+    });
+});
+
+app.post("/notes/:id", function(req, res) {
+    var newNote = new Note(req.body);
+    //save it to the DB
+    newNote.save(function(err, doc) {
+        if (err) {
+            console.log(err);
+        }
+        Article.findOneAndUpdate(
+            {_id: req.params.id},
+            {$push: {note: doc._id}},
+            {new: true},
+            (err, newDoc) => {
+                if (err) console.log(err);
+                res.send(newDoc);
+            }
+        )
+    })
+})
+
 }

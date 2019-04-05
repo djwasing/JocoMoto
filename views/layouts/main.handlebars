@@ -6,32 +6,37 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Paytone+One" rel="stylesheet">
     <link href="/assets/css/style.css"  rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
   </head>
   <body>
     <nav class="navbar navbar-default">
-				<div class="container-fluid">
+				<div class="container">
 					<div class="navbar-header">
 						<a class="navbar-brand" id="brand" href="/">JOCO MOTO</a>
 					</div>
-						<form class="navbar-form navbar-left" action="/saved" method="get">
-							<button class="btn btn-danger saved">View Saved Articles</button>
+            <form class="navbar-form" action="/saved" method="get">
+							<button class="btn btn-danger saved" id="navBtn">View Saved Articles</button>
 						</form>
-						<form class="navbar-form navbar-left" action="/scrape" method="get">
-							<button class="btn btn-danger scrape">Scrape New Articles</button>
+						<form class="navbar-form" action="/scrape" method="get">
+							<button class="btn btn-danger scrape" data-toggle="modal" data-target="#alertModalNew">Scrape New Articles</button>
 						</form>
-            <form class="navbar-form navbar-left" action="/all" method="get">
-              <button class="btn btn-danger show">Show Current Articles</button>
-            </form>
 				</div>
 			</nav>
-			{{!-- <div class="main-img-container">
-				<img class="main-img" src="assets/img/nyt-pappers.jpg" alt="header-image-nyt-papers" />
-			</div> --}}
+
+  
 
     {{{body}}}
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
     <script type="text/javascript" src="/assets/js/app.js"></script>
   </body>
 </html>
