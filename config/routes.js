@@ -77,19 +77,40 @@ module.exports = function(app) {
 
   // -------- Routes for Note Taking --------
 
-  app.post("/submit", function(req, res) {
-    console.log(req.body);
+  app.get("/notes/:id", function(req, res) {
+      console.log("*****81 get route for notes: ",req.params.id);
+      Article.findById(req.params.id)
+        .populate("note")
+        .then(function(data) {
+            console.log("-----routes line 85 ", data);
+            res.json(data);
+        })
+  })
+
+  app.post("/notes/:id", function(req, res) {
+    const id = req.params.id;
+    console.log("line90 ID: ", id);
+    console.log("endpoint body", req.body);
+    const data = {
+        content: req.body.body
+    }
     //Insert the note into the notes collection
-    Note.insert(req.body, function(error, saved) {
-        //when user clicks submit note, gets ID from the article, and pushes newly created note ID into the Article.note
-        Article.updateOne({_id: id}, {$push: {note: saved._id}})
+    Note.create(data, function(error, saved) {
+        if (error) {
+            console.log(error);
+        }else{
+            console.log("routes line102: ", saved);
+            Article.updateOne({_id: id}, {$push: {note: saved._id}})
             .then(updatedArticle => {
                 res.json(updatedArticle);
             }).catch(err => {
                 console.log(err);
             })
+        }
+        
+        
     });
-    //make sure submit butn grabs the ID of the article. send the content of the note AND the ID of the article it belongs to. 
+    //make sure submit btn grabs the ID of the article. send the content of the note AND the ID of the article it belongs to. 
     // create var
   });
 
@@ -115,24 +136,5 @@ app.get("/saved", function(req, res) {
         res.render("saved", hbsObject);
     });
 });
-
-app.post("/notes/:id", function(req, res) {
-    var newNote = new Note(req.body);
-    //save it to the DB
-    newNote.save(function(err, doc) {
-        if (err) {
-            console.log(err);
-        }
-        Article.findOneAndUpdate(
-            {_id: req.params.id},
-            {$push: {note: doc._id}},
-            {new: true},
-            (err, newDoc) => {
-                if (err) console.log(err);
-                res.send(newDoc);
-            }
-        )
-    })
-})
 
 }
